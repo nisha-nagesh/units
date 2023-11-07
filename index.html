@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Unit Converter</title>
+    <style>
+      body{
+        background-image: url(https://www.joydeepdeb.com/images/unit-converter.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
+</head>
+<body style="position: relative; left:1100px;font-size: x-large;">
+    <h1>Unit Converter</h1>
+
+    <label for="value">Enter Value:</label>
+    <input type="number" id="value" placeholder="Enter value"><br><br>
+
+    <label for="fromUnit">From Unit:</label>
+    <select id="fromUnit">
+        <option value="mm">Millimeters (mm)</option>
+        <option value="cm">Centimeters (cm)</option>
+        <option value="m">Meters (m)</option>
+        <option value="km">Kilometers (km)</option>
+    </select><br><br>
+
+    <label for="toUnit">To Unit:</label>
+    <select id="toUnit">
+        <option value="mm">Millimeters (mm)</option>
+        <option value="cm">Centimeters (cm)</option>
+        <option value="m">Meters (m)</option>
+        <option value="km">Kilometers (km)</option>
+    </select><br><br>
+
+    <button onclick="convertUnits()">Convert</button>
+
+    <p>Result: <span id="result"></span></p>
+
+    <script>
+        function convertUnits() {
+            const value = parseFloat(document.getElementById('value').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+
+            const conversionFactors = {
+                mm: { cm: 0.1, m: 0.001, km: 0.000001 },
+                cm: { mm: 10, m: 0.01, km: 0.00001 },
+                m: { mm: 1000, cm: 100, km: 0.001 },
+                km: { mm: 1000000, cm: 100000, m: 1000 }
+            };
+
+            if (isNaN(value)) {
+                alert('Please enter a valid value.');
+                return;
+            }
+
+            if (fromUnit === toUnit) {
+                document.getElementById('result').textContent = value + ' ' + toUnit;
+            } else if (conversionFactors[fromUnit] && conversionFactors[fromUnit][toUnit]) {
+                const convertedValue = value * conversionFactors[fromUnit][toUnit];
+                document.getElementById('result').textContent = convertedValue + ' ' + toUnit;
+            } else {
+                alert('Conversion not supported for the selected units.');
+            }
+        }
+    </script>
+</body>
+</html>
